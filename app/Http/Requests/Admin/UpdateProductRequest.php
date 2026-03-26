@@ -22,6 +22,7 @@ class UpdateProductRequest extends FormRequest
             'barcode' => ['nullable', 'string', 'max:100'],
             'cost_price' => ['required', 'numeric', 'min:0'],
             'selling_price' => ['required', 'numeric', 'min:0'],
+            'stock_quantity' => ['nullable', 'integer', 'min:0'],
             'min_stock_level' => ['nullable', 'integer', 'min:0'],
             'unit' => ['nullable', 'string', 'max:50'],
             'is_active' => ['nullable', 'boolean'],

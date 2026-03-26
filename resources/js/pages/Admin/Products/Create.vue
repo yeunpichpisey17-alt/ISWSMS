@@ -40,7 +40,7 @@ const form = useForm({
     unit: 'pcs',
     is_active: true,
     images: [] as File[],
-}, { forceFormData: true });
+});
 
 function handleImages(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -48,7 +48,9 @@ function handleImages(event: Event) {
 }
 
 function submit() {
-    form.post('/admin/products');
+    form.post('/admin/products', {
+        forceFormData: true,
+    });
 }
 </script>
 

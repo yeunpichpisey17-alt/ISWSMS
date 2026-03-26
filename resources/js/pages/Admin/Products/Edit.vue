@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -37,7 +37,7 @@ const props = defineProps<{
         min_stock_level: number;
         unit: string;
         is_active: boolean;
-        media: ProductMedia[];
+        images: ProductMedia[];
     };
     categories: Array<{ id: number; name: string }>;
 }>();
@@ -63,9 +63,9 @@ const form = useForm({
     is_active: props.product.is_active,
     images: [] as File[],
     remove_images: [] as number[],
-}, { forceFormData: true });
+});
 
-const existingMedia = ref<ProductMedia[]>([...props.product.media]);
+const existingMedia = ref<ProductMedia[]>([...props.product.images]);
 
 function removeExistingImage(media: ProductMedia) {
     existingMedia.value = existingMedia.value.filter(m => m.id !== media.id);
@@ -78,11 +78,8 @@ function handleImages(event: Event) {
 }
 
 function submit() {
-    router.post(`/admin/products/${props.product.id}`, form.data(), {
-        onSuccess: () => form.reset(),
-        onError: (errors) => {
-            form.errors = errors as any;
-        },
+    form.post(`/admin/products/${props.product.id}`, {
+        forceFormData: true,
     });
 }
 </script>
